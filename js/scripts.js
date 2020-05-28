@@ -14,7 +14,7 @@ Game.prototype.switchUser(){
   }
 }
 
-Game.prototype.isWinner = function(){
+Game.prototype.determineWinner = function(){
   for(var i = 0; i <= 2; i++){
     if (board.boardState[i].every((val, i, arr) => val === arr[0] )){
      this.winner = this.currentUser;
@@ -26,6 +26,10 @@ Game.prototype.isWinner = function(){
     } 
   }
   if(board.boardState[0][0] === board.boardState[1][1] === board.boardState[2][2]){
+    this.winner = this.currentUser;
+  }
+
+  if(board.boardState[0][2] === board.boardState[1][1] === board.boardState[2][0]){
     this.winner = this.currentUser;
   }
   
@@ -55,7 +59,9 @@ Board.prototype.addOccupiedSpace = function(move){
     this.boardState[move.y][move.x] = move.currentUser;
   }
   //call these everytime a new space is occupied
-  if (game.isWinner()){
+  game.determineWinner();
+  if(!(game.winner === "")){
+    console.log(game.winner + " wins!!")
     return;
   }
   game.switchUser();
