@@ -17,13 +17,16 @@ Game.prototype.switchUser(){
 Game.prototype.isWinner = function(){
   for(var i = 0; i <= 2; i++){
     if (board.boardState[i].every((val, i, arr) => val === arr[0] )){
-      game.winner = currentUser;
+     this.winner = this.currentUser;
       break;
     }
     if (board.boardState[0][i] === board.boardState[1][i] === board.boardState[2][i]){
-      game.winner == currentUser;
+      this.winner = this.currentUser;
       break;
     } 
+  }
+  if(board.boardState[0][0] === board.boardState[1][1] === board.boardState[2][2]){
+    this.winner = this.currentUser;
   }
   
 }
