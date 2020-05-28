@@ -5,7 +5,7 @@ function Game(){
   this.winner = "";
 }
 
-Game.prototype.switchPlayer(){
+Game.prototype.switchPlayer = function(){
   if (this.currentPlayer === "X"){
     this.currentPlayer = "Y"
   }
@@ -16,26 +16,25 @@ Game.prototype.switchPlayer(){
 
 Game.prototype.determineWinner = function(){
   for(var i = 0; i <= 2; i++){
-    if (board.boardState[i].every((val, i, arr) => val === arr[0] )){
+    if (board.boardState[i].every((val, i, arr) => val === this.currentPlayer )){
      this.winner = this.currentPlayer;
       break;
     }
-    if (board.boardState[0][i] === board.boardState[1][i] === board.boardState[2][i]){
+   
+    if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].every((val, i, arr) => val === this.currentPlayer)){
       this.winner = this.currentPlayer;
       break;
     } 
   }
-  if(board.boardState[0][0] === board.boardState[1][1] === board.boardState[2][2]){
+  if([board.boardState[0][0],board.boardState[1][1],board.boardState[2][2]].every((val, i, arr) => val === this.currentPlayer)){
     this.winner = this.currentPlayer;
   }
 
-  if(board.boardState[0][2] === board.boardState[1][1] === board.boardState[2][0]){
+  if([board.boardState[0][2],board.boardState[1][1],board.boardState[2][0]].every((val, i, arr) => val === this.currentPlayer )){
     this.winner = this.currentPlayer;
   }
   
 }
-
-let game = new Game();
 
 function Move(x,y){
   this.x = x;
@@ -51,11 +50,12 @@ Board.prototype.isAlreadyOccupied = function(move){
   {
     return false;
   }
+  
   return true;
 }
 
 Board.prototype.addOccupiedSpace = function(move){
-  if(!board.isAlreadyOccupied){
+  if(!board.isAlreadyOccupied(move)){
     this.boardState[move.y][move.x] = game.currentPlayer;
   }
   //call these everytime a new space is occupied
@@ -64,11 +64,11 @@ Board.prototype.addOccupiedSpace = function(move){
     console.log(game.winner + " wins!!")
     return;
   }
-  game.switchUser();
+  game.switchPlayer();
 }
 
 let board = new Board();
-
+let game = new Game();
 function go(x,y){
   let move = new Move(x,y)
   board.addOccupiedSpace(move)
