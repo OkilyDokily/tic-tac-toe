@@ -1,0 +1,43 @@
+create an object representing the board.
+var board = new Board 
+
+create a property of the board that tracks the state of the board.
+[["","",""],["","",""],["","",""]];
+
+create an object that represents on occupied space on the board and the player.
+var occupied = new Occupied(column, row, currentuser);
+
+create a method on board that allows user to add a new occupied.
+board.Add(occupied)
+
+create a variable that tracks current user
+var currentuser = playerX
+
+create a game object that switches the current user
+game.switchUser();
+
+determine if a space is already occupied
+board.isOccupied(column, row)
+
+determine if there is a win
+  check if each inner array is the same.
+  check if each beginning of array is the same then middle then last
+  check if first value of first array and second value of second array and last of third array is the same
+  check if last value of first array and second value of second array and first value of third array is the same
+  
+  change game object state to game.won(currentuser)
+
+
+
+| Spec                                                                   | Input                                 | Output                                                        |
+|------------------------------------------------------------------------|---------------------------------------|---------------------------------------------------------------|
+| create an object representing the board                                | new Board()                           | object with board state and functions to manipulate the board |
+| create an object that represents an occupied space                     | new Occupied(column, row, currentUser | Occupied space object that can be applied to the board object |
+| create  a method on board object that accepts an occupied space object | board.AddOccupiedSpace(occupiedSpace) | update the board state                                        |
+
+
+
+
+
+
+
