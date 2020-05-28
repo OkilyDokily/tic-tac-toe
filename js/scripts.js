@@ -13,6 +13,12 @@ Game.prototype.switchUser(){
   }
 }
 
+function Move(x,y, currentUser){
+  this.x = x;
+  this.y = y;
+  this.currentUser = currentUser; 
+}
+
 function Board(){
   this.boardState = [["","",""],["","",""],["","",""]];
 }
