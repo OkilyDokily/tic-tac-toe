@@ -1,0 +1,16 @@
+div div {
+
+  background-color: lightblue;
+  font-size: 100px;
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+
+
+div#game {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-template-rows: 100px 100px 100px;
+  grid-gap: 5px;
+}
