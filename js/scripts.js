@@ -3,6 +3,7 @@
 function Game(){
   this.currentPlayer = "X";
   this.winner = "";
+  this.winLine = -1;
 }
 
 Game.prototype.switchPlayer = function(){
@@ -18,20 +19,24 @@ Game.prototype.determineWinner = function(){
   for(var i = 0; i <= 2; i++){
     if (board.boardState[i].every((val, i, arr) => val === this.currentPlayer )){
      this.winner = this.currentPlayer;
+     this.winLine = i;
       break;
     }
    
     if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].every((val, i, arr) => val === this.currentPlayer)){
       this.winner = this.currentPlayer;
+      this.winLine = i + 3;
       break;
     } 
   }
   if([board.boardState[0][0],board.boardState[1][1],board.boardState[2][2]].every((val, i, arr) => val === this.currentPlayer)){
     this.winner = this.currentPlayer;
+    this.winLine = 6;
   }
 
   if([board.boardState[0][2],board.boardState[1][1],board.boardState[2][0]].every((val, i, arr) => val === this.currentPlayer )){
     this.winner = this.currentPlayer;
+    this.winLine = 7;
   }
   
 }
@@ -93,7 +98,7 @@ $(document).ready(function(){
       $(this).text(game.currentPlayer);
       go(x,y);
       if(!(game.winner === "")){
-        $("div#winner").text(game.winner + " wins!!")
+        displayCross();
       }
     }
   }
@@ -105,5 +110,54 @@ $(document).ready(function(){
   })
   function removeText(){
     $("#game div").text("");
+    $("#winner").text("");
+  }
+  function displayCross(){
+    switch (game.winLine){
+      case 0:
+        $("#cross").css("height","10px")
+        $("#cross").css("width","300px")
+        $("#cross").css("left",6)
+        $("#cross").css("bottom",265)
+        break;
+      case 1:
+        $("#cross").css("height","10px")
+        $("#cross").css("width","300px")
+        $("#cross").css("left",6)
+        $("#cross").css("bottom",160)
+        break;
+      case 2:
+        $("#cross").css("height","10px")
+        $("#cross").css("width","300px")
+        $("#cross").css("left",6)
+        $("#cross").css("bottom",60)
+        break;
+      case 3:
+        $("#cross").css("width","10px")
+        $("#cross").css("height","300px")
+        $("#cross").css("left",45)
+        $("#cross").css("bottom",312)
+        break;
+      case 4:
+        $("#cross").css("width","10px")
+        $("#cross").css("height","300px")
+        $("#cross").css("left",150)
+        $("#cross").css("bottom",312)
+        break;
+      case 5:
+        $("#cross").css("width","10px")
+        $("#cross").css("height","300px")
+        $("#cross").css("left",250)
+        $("#cross").css("bottom",312)
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+    }
+    $("#cross").show();
+    
   }
 })

@@ -9,8 +9,32 @@ div div {
 
 
 div#game {
+  margin-top: 45px;
   display: grid;
   grid-template-columns: 100px 100px 100px;
   grid-template-rows: 100px 100px 100px;
   grid-gap: 5px;
+  justify-content: center;
 }
+
+button{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+}
+
+div#cross{
+  display: none;
+  position: relative;
+  /* left: 0;
+  bottom: 312px; */
+  background-color: red;
+  /* width: 10px;
+  height: 300px */
+}
+
+/*
+position 4 
+right: 50%;
+bottom: 89px; */
