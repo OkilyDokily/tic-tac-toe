@@ -72,6 +72,12 @@ function go(x,y){
   board.addOccupiedSpace(move)
 }
 
+function resetGame(){
+  game.currentPlayer = "X"
+  game.winner = ""
+  board.boardState = [["","",""],["","",""],["","",""]];
+}
+
 $(document).ready(function(){
  
   $("div#game").on("click","div",function(e){
@@ -92,5 +98,12 @@ $(document).ready(function(){
     }
   }
   })
-    
+   
+  $("#restart").click(function(){
+    resetGame();
+    removeText();
+  })
+  function removeText(){
+    $("#game div").text("");
+  }
 })
