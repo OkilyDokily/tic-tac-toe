@@ -7,7 +7,7 @@ function Game(){
 
 Game.prototype.switchPlayer = function(){
   if (this.currentPlayer === "X"){
-    this.currentPlayer = "Y"
+    this.currentPlayer = "O"
   }
   else {
     this.currentPlayer = "X"
@@ -60,20 +60,37 @@ Board.prototype.addOccupiedSpace = function(move){
   }
   //call these everytime a new space is occupied
   game.determineWinner();
-  if(!(game.winner === "")){
-    console.log(game.winner + " wins!!")
-    return;
-  }
   game.switchPlayer();
 }
 
 let board = new Board();
 let game = new Game();
+
+//call this at the start of each turn.
 function go(x,y){
   let move = new Move(x,y)
   board.addOccupiedSpace(move)
 }
 
 $(document).ready(function(){
+ 
+  $("div#game").on("click","div",function(e){
+    e.preventDefault();
+    if(game.winner === ""){
+    let length = $(this).prevAll().length;
+    let y = Math.floor((length / 3));
+    let x = length - (y * 3);
 
+    let move = new Move(x,y)
+    
+    if(!board.isAlreadyOccupied(move)){
+      $(this).text(game.currentPlayer);
+      go(x,y);
+      if(!(game.winner === "")){
+        $("div#winner").text(game.winner + " wins!!")
+      }
+    }
+  }
+  })
+    
 })
