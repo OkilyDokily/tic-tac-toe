@@ -153,8 +153,20 @@ $(document).ready(function(){
       case 6:
         break;
       case 7:
+
+        //diaganol from top right to bottom left.
+        $("#cross").css("height","10px")
+        $("#cross").css("width","300px")
+        $("#cross").css("left",6)
+        $("#cross").css("bottom",160)
+        $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
         break;
       case 8:
+        // $("#cross").css("height","10px")
+        // $("#cross").css("width","300px")
+        // $("#cross").css("left",6)
+        // $("#cross").css("bottom",160)
+        // $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
         break;
     }
     $("#cross").show();

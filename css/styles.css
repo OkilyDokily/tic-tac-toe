@@ -27,14 +27,8 @@ button{
 div#cross{
   display: none;
   position: relative;
-  /* left: 0;
-  bottom: 312px; */
+ 
   background-color: red;
-  /* width: 10px;
-  height: 300px */
+ 
 }
 
-/*
-position 4 
-right: 50%;
-bottom: 89px; */
