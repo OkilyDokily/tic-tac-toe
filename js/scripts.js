@@ -151,23 +151,21 @@ $(document).ready(function(){
         $("#cross").css("bottom",312)
         break;
       case 6:
+        //diaganol from top left to bottom right
+        $("#cross").css("width","10px")
+        $("#cross").css("height","300px")
+        $("#cross").css("left",150)
+        $("#cross").css("bottom",312)
+        $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
+        break;
         break;
       case 7:
-
         //diaganol from top right to bottom left.
         $("#cross").css("height","10px")
         $("#cross").css("width","300px")
         $("#cross").css("left",6)
         $("#cross").css("bottom",160)
-        $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
-        break;
-      case 8:
-        // $("#cross").css("height","10px")
-        // $("#cross").css("width","300px")
-        // $("#cross").css("left",6)
-        // $("#cross").css("bottom",160)
-        // $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
-        break;
+        $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")  
     }
     $("#cross").show();
     
