@@ -106,11 +106,13 @@ $(document).ready(function(){
    
   $("#restart").click(function(){
     resetGame();
-    removeText();
+    removeUI();
   })
-  function removeText(){
+  function removeUI(){
     $("#game div").text("");
     $("#winner").text("");
+    $("#cross").hide();
+
   }
   function displayCross(){
     switch (game.winLine){
@@ -157,7 +159,6 @@ $(document).ready(function(){
         $("#cross").css("left",150)
         $("#cross").css("bottom",312)
         $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
-        break;
         break;
       case 7:
         //diaganol from top right to bottom left.
