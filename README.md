@@ -26,7 +26,9 @@ _Page creates a tic tac toe game_
 | check if first value of first array and second value of second array and last of third array is the same       | xoo oxo oox                           | update game object property from Winner from "" to playerX    |
 | check if last value of first array and second value of second array and first value of third array is the same | oox oxo xoo                           | update game object property from winner  from "" to playerX   |
 | easy game                                                                                                      |                                       |                                                               |
-|                                                                                                                |                                       |                                                               |
+| computer plays after game.switchPlayer()                                                                       | game.switchPlayer()                   | game.Player = "X"                                             |
+| randomly generate two values                                                                                   | game.computerRandom()                 | [0-2,0-2]                                                     |
+| if the space is occupied play again                                                                            | board.isOccupied()                    | play again                                                    |
 
 ## Setup/Installation Requirements
 

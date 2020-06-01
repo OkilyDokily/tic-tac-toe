@@ -4,6 +4,7 @@ function Game(){
   this.currentPlayer = "X";
   this.winner = "";
   this.winLine = -1;
+  this.computer = "";
 }
 
 Game.prototype.switchPlayer = function(){
@@ -12,6 +13,9 @@ Game.prototype.switchPlayer = function(){
   }
   else {
     this.currentPlayer = "X"
+    if (this.computer = "easy"){
+      goComputerEasy();
+    }
   }
 }
 
@@ -46,6 +50,7 @@ function Move(x,y){
   this.y = y;
 }
 
+
 function Board(){
   this.boardState = [["","",""],["","",""],["","",""]];
 }
@@ -75,6 +80,21 @@ let game = new Game();
 function go(x,y){
   let move = new Move(x,y)
   board.addOccupiedSpace(move)
+}
+
+function goComputerEasy(){
+  let keepGoing = true;
+  let x;
+  let y;
+  while(keepGoing){
+    x = Math.floor(Math.random() * 2);
+    y = Math.floor(Math.random() * 2);
+    let move = new Move(x,y)
+     if (!isAlreadyOccupied(move)){
+      keepGoing = false;
+     }
+  }
+    go(x,y);
 }
 
 function resetGame(){
