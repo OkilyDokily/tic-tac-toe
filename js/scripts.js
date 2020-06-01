@@ -13,7 +13,7 @@ Game.prototype.switchPlayer = function(){
   }
   else {
     this.currentPlayer = "X"
-    if (this.computer = "easy"){
+    if (this.computer === "easy"){
       goComputerEasy();
     }
   }
@@ -67,10 +67,11 @@ Board.prototype.isAlreadyOccupied = function(move){
 Board.prototype.addOccupiedSpace = function(move){
   if(!board.isAlreadyOccupied(move)){
     this.boardState[move.y][move.x] = game.currentPlayer;
+     //call these everytime a new space is occupied
+    game.determineWinner();
+    game.switchPlayer();
   }
-  //call these everytime a new space is occupied
-  game.determineWinner();
-  game.switchPlayer();
+ 
 }
 
 let board = new Board();
@@ -84,18 +85,21 @@ function go(x,y){
 }
 
 function goComputerEasy(){
-    let emptySpaces = board.boardState.flat().map(function(item){
+    let emptySpaces = board.boardState.flat().map(function(item,i){
       if(item === ""){
         return i;
       }
       else{return item}
-    },i).filter(function(item){
-      return !(item === "X" || item === "Y")
+    }).filter(function(item){
+      return !(item === "X" || item === "O")
     });
+    console.log(emptySpaces)
 
     let length = emptySpaces.length;
-    let randomChoice = emptySpaces[Math.floor(Math.random * length)]
-
+ 
+    let randomChoice = Math.floor(Math.random() * length )
+    
+    console.log(randomChoice)
     let y = Math.floor((randomChoice / 3));
     let x = randomChoice - (y * 3);
 
@@ -107,6 +111,7 @@ function goComputerEasy(){
 function resetGame(){
   game.currentPlayer = "X"
   game.winner = ""
+  game.computer = "";
   board.boardState = [["","",""],["","",""],["","",""]];
 }
 
@@ -142,6 +147,7 @@ $(document).ready(function(){
     game.computer = "easy";
     goComputerEasy();
   })
+
   function removeUI(){
     $("#game div").text("");
     $("#winner").text("");
@@ -187,7 +193,7 @@ $(document).ready(function(){
         $("#cross").css("bottom",312)
         break;
       case 6:
-        //diaganol from top left to bottom right
+        //diagonal from top left to bottom right
         $("#cross").css("width","10px")
         $("#cross").css("height","300px")
         $("#cross").css("left",150)
@@ -195,7 +201,7 @@ $(document).ready(function(){
         $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
         break;
       case 7:
-        //diaganol from top right to bottom left.
+        //diagonal from top right to bottom left.
         $("#cross").css("height","10px")
         $("#cross").css("width","300px")
         $("#cross").css("left",6)
