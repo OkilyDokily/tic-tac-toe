@@ -78,22 +78,16 @@ let game = new Game();
 
 //call this at the start of each turn.
 function go(x,y){
+  
   let move = new Move(x,y)
   board.addOccupiedSpace(move)
 }
 
 function goComputerEasy(){
-  let keepGoing = true;
-  let x;
-  let y;
-  while(keepGoing){
-    x = Math.floor(Math.random() * 2);
-    y = Math.floor(Math.random() * 2);
-    let move = new Move(x,y)
-     if (!isAlreadyOccupied(move)){
-      keepGoing = false;
-     }
-  }
+    let boardCopy = ;
+
+    let number = ((y * 3) + x) + 1;
+    $("div#game div:nth-child("+ number + ")").text("X");
     go(x,y);
 }
 
@@ -127,6 +121,13 @@ $(document).ready(function(){
   $("#restart").click(function(){
     resetGame();
     removeUI();
+  })
+
+  $("#easy").click(function(){
+    resetGame();
+    removeUI();
+    game.computer = "easy";
+    goComputerEasy();
   })
   function removeUI(){
     $("#game div").text("");

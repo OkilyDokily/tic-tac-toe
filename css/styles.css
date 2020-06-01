@@ -10,15 +10,16 @@ div#game {
   display: grid;
   grid-template-columns: 100px 100px 100px;
   grid-template-rows: 100px 100px 100px;
+
+  grid-auto-rows: 0px;
   grid-gap: 5px;
   justify-content: center;
 }
 
 button{
   display: block;
-  position: absolute;
-  left: 50%;
-  top: 400px;
+  
+  
   margin-left: auto;
   margin-right: auto;
   margin-top: 25px;

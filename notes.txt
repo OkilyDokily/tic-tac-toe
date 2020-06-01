@@ -29,12 +29,11 @@ determine if there is a win
 
 
 
-| Spec                                                                   | Input                                 | Output                                                        |
-|------------------------------------------------------------------------|---------------------------------------|---------------------------------------------------------------|
-| create an object representing the board                                | new Board()                           | object with board state and functions to manipulate the board |
-| create an object that represents an occupied space                     | new Occupied(column, row, currentUser | Occupied space object that can be applied to the board object |
-| create  a method on board object that accepts an occupied space object | board.AddOccupiedSpace(occupiedSpace) | update the board state                                        |
-
+Easy game.
+computer plays after game player switches.
+flattens the board.boardState and then map the empty spaces with index values
+filter to only the mapped index spaces
+randomly choose an indexed space;
 
 
 
