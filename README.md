@@ -24,7 +24,9 @@ _Page creates a tic tac toe game_
 | check if each inner array is the same.                                                                         | [xxx][xoo][oxx]                       | update game object property Winner from "" to playerX.        |
 | check if each beginning of each array is the same then middle then last                                        | xoo xxo xox                           | update game object property Winner from "" to playerX         |
 | check if first value of first array and second value of second array and last of third array is the same       | xoo oxo oox                           | update game object property from Winner from "" to playerX    |
-| check if last value of first array and second value of second array and first value of third array is the same | oox oxo xoo                           | update game object property from winner  from "" to playerX   |                                   |
+| check if last value of first array and second value of second array and first value of third array is the same | oox oxo xoo                           | update game object property from winner  from "" to playerX   |
+| easy game                                                                                                      |                                       |                                                               |
+|                                                                                                                |                                       |                                                               |
 
 ## Setup/Installation Requirements
 

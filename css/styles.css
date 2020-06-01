@@ -1,12 +1,9 @@
 div div {
-
   background-color: lightblue;
   font-size: 100px;
   text-align: center;
   padding-bottom: 4px;
 }
-
-
 
 div#game {
   margin-top: 45px;
@@ -19,6 +16,9 @@ div#game {
 
 button{
   display: block;
+  position: absolute;
+  left: 50%;
+  top: 400px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 25px;
