@@ -84,10 +84,23 @@ function go(x,y){
 }
 
 function goComputerEasy(){
-    let boardCopy = ;
+    let emptySpaces = board.boardState.flat().map(function(item){
+      if(item === ""){
+        return i;
+      }
+      else{return item}
+    },i).filter(function(item){
+      return !(item === "X" || item === "Y")
+    });
 
-    let number = ((y * 3) + x) + 1;
-    $("div#game div:nth-child("+ number + ")").text("X");
+    let length = emptySpaces.length;
+    let randomChoice = emptySpaces[Math.floor(Math.random * length)]
+
+    let y = Math.floor((randomChoice / 3));
+    let x = randomChoice - (y * 3);
+
+    
+    $("div#game div:nth-child("+ (randomChoice + 1) + ")").text("X");
     go(x,y);
 }
 

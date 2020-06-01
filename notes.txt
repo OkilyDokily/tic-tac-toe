@@ -27,8 +27,6 @@ determine if there is a win
   
   change game object state to game.won(currentuser)
 
-
-
 Easy game.
 computer plays after game player switches.
 flattens the board.boardState and then map the empty spaces with index values
