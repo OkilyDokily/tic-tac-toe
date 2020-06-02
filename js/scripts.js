@@ -111,8 +111,25 @@ function goComputerEasy(){
   }
 }
 
+let turn = 1;
 function goComputerHard(){
-  
+  if (turn === 1){
+    let move = new Move(0,0);
+    board.addOccupiedSpace(move);
+    $("div#game div:nth-child("+ 1 + ")").text("X");
+    turn++;
+    return;
+  }
+  if (turn === 2){
+    let move = new Move(2,2);
+    if(board.isAlreadyOccupied(move)){
+      let move = new Move(0,2)
+      board.addOccupiedSpace(move)
+    }
+    else{
+      board.addOccupiedSpace(move);
+    }
+  }
 }
 
 
