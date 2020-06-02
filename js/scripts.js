@@ -131,7 +131,22 @@ function goComputerHard(){
     }
   }
   if (turn === 3){
-
+    let choice = isTwo();
+    let topRight = new Move(2,0)
+    let bottomLeft = new Move(0,2);
+    if(!(choice === false)){
+      board.addOccupiedSpace(choice.move)
+    }
+    else
+    if (!(board.isAlreadyOccupied(topRight))){
+      board.addOccupiedSpace(topRight);
+    }
+    else{
+      board.addOccupiedSpace(bottomLeft);
+    }
+  }
+  else {
+    
   }
 }
 
@@ -144,36 +159,19 @@ function isTwo() {
       break;
     }
 
-    if (board.boardState[i].filter(item => item === "O").length === 2 && board.boardState.some(item => item === "")){
-      let index = board.boardState[i].findIndex(item => item === "");
-      let move = new Move(index,i)
-      return {player:"O",emptySpace:move}
-      break;
-    }
-
+   
     if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].filter(item => item === "X").length === 2 && [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].some(item => item === "")){
       let index = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].findIndex(item => item === "");
       let move = new Move(i, index);
       return {player:"X", emptySpace:move}
     }
-    if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].filter(item => item === "O").length === 2 && [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].some(item => item === "")){
-      let index = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].findIndex(item => item === "");
-      let move = new Move(i, index)
-      return {player:"O", emptySpace:move}
-    }
+    
   }
-
 
   if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].filter(item => item === "X").length === 2 && [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].some(item => item === "")){
     let index = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].findIndex(item => item === "");
     let move = new Move(index, index);
     return {player:"X",emptySpace: move}
-  }
-
-  if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].filter(item => item === "O").length === 2 && [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].some(item => item === "")){
-    let index = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].findIndex(item => item === "");
-    let move = new Move(index, index);
-    return {player:"O",emptySpace: move}
   }
 
   if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].filter(item => item ==="X").length === 2 && [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].some(item => item === "")){
@@ -182,11 +180,38 @@ function isTwo() {
     return {player:"X",emptySpace:move}
   }
 
+  for (let i = 0; i <= 2; i++) {
+    if (board.boardState[i].filter(item => item === "O").length === 2 && board.boardState.some(item => item === "")){
+      let index = board.boardState[i].findIndex(item => item === "");
+      let move = new Move(index,i)
+      return {player:"O",emptySpace:move}
+      break;
+    }
+
+   
+    if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].filter(item => item === "O").length === 2 && [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].some(item => item === "")){
+      let index = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].findIndex(item => item === "");
+      let move = new Move(i, index)
+      return {player:"O", emptySpace:move}
+    }
+  }
+
+
+  if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].filter(item => item === "O").length === 2 && [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].some(item => item === "")){
+    let index = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].findIndex(item => item === "");
+    let move = new Move(index, index);
+    return {player:"O",emptySpace: move}
+  }
+
+ 
+
   if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].filter(item => item ==="O").length === 2 && [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].some(item => item === "")){
     let index = [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].findIndex(item => item === "");
     let move = new Move(2 - index ,index)
     return {player:"O",emptySpace:move}
   }
+
+  return false;
 }
 
 
