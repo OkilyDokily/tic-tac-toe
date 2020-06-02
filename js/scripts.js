@@ -1,49 +1,54 @@
 //business logic
-
-function Game(){
-  this.currentPlayer = "X";
-  this.winner = "";
-  this.winLine = -1;
-  this.computer = "";
-}
-
-Game.prototype.switchPlayer = function(){
-  if (this.currentPlayer === "X"){
-    this.currentPlayer = "O"
+class Game {
+  constructor() {
+    this.currentPlayer = "X";
+    this.winner = "";
+    this.winLine = -1;
+    this.computer = "";
   }
-  else {
-    this.currentPlayer = "X"
-    if (this.computer === "easy"){
-      goComputerEasy();
+  switchPlayer() {
+    if (this.currentPlayer === "X") {
+      this.currentPlayer = "O";
+    }
+    else {
+      this.currentPlayer = "X";
+      if (this.computer === "easy") {
+        goComputerEasy();
+      }
     }
   }
-}
-
-Game.prototype.determineWinner = function(){
-  for(var i = 0; i <= 2; i++){
-    if (board.boardState[i].every((val, i, arr) => val === this.currentPlayer )){
-     this.winner = this.currentPlayer;
-     this.winLine = i;
-      break;
+  determineWinner() {
+    for (let i = 0; i <= 2; i++) {
+      if (board.boardState[i].every((val, i, arr) => val === this.currentPlayer)) {
+        this.winner = this.currentPlayer;
+        this.winLine = i;
+        break;
+      }
+      if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].every((val, i, arr) => val === this.currentPlayer)) {
+        this.winner = this.currentPlayer;
+        this.winLine = i + 3;
+        break;
+      }
     }
-   
-    if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].every((val, i, arr) => val === this.currentPlayer)){
+    if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].every((val, i, arr) => val === this.currentPlayer)) {
       this.winner = this.currentPlayer;
-      this.winLine = i + 3;
-      break;
-    } 
-  }
-  if([board.boardState[0][0],board.boardState[1][1],board.boardState[2][2]].every((val, i, arr) => val === this.currentPlayer)){
-    this.winner = this.currentPlayer;
-    this.winLine = 6;
+      this.winLine = 6;
+    }
+    if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].every((val, i, arr) => val === this.currentPlayer)) {
+      this.winner = this.currentPlayer;
+      this.winLine = 7;
+    }
   }
 
-  if([board.boardState[0][2],board.boardState[1][1],board.boardState[2][0]].every((val, i, arr) => val === this.currentPlayer )){
-    this.winner = this.currentPlayer;
-    this.winLine = 7;
+  resetGame(){
+    game.currentPlayer = "X"
+    game.winner = ""
+    game.computer = "";
+    board.boardState = [["","",""],["","",""],["","",""]];
   }
-  
 }
+
+
 
 function Move(x,y){
   this.x = x;
@@ -51,27 +56,24 @@ function Move(x,y){
 }
 
 
-function Board(){
-  this.boardState = [["","",""],["","",""],["","",""]];
-}
-
-Board.prototype.isAlreadyOccupied = function(move){
-  if (this.boardState[move.y][move.x] === "")
-  {
-    return false;
+class Board {
+  constructor() {
+    this.boardState = [["", "", ""], ["", "", ""], ["", "", ""]];
   }
-  
-  return true;
-}
-
-Board.prototype.addOccupiedSpace = function(move){
-  if(!board.isAlreadyOccupied(move)){
-    this.boardState[move.y][move.x] = game.currentPlayer;
-     //call these everytime a new space is occupied
-    game.determineWinner();
-    game.switchPlayer();
+  isAlreadyOccupied(move) {
+    if (this.boardState[move.y][move.x] === "") {
+      return false;
+    }
+    return true;
   }
- 
+  addOccupiedSpace(move) {
+    if (!board.isAlreadyOccupied(move)) {
+      this.boardState[move.y][move.x] = game.currentPlayer;
+      //call these everytime a new space is occupied
+      game.determineWinner();
+      game.switchPlayer();
+    }
+  }
 }
 
 let board = new Board();
@@ -85,6 +87,7 @@ function go(x,y){
 }
 
 function goComputerEasy(){
+  if (game.winner == ""){
     let emptySpaces = board.boardState.flat().map(function(item,i){
       if(item === ""){
         return i;
@@ -93,27 +96,26 @@ function goComputerEasy(){
     }).filter(function(item){
       return !(item === "X" || item === "O")
     });
-    console.log(emptySpaces)
 
     let length = emptySpaces.length;
  
-    let randomChoice = Math.floor(Math.random() * length )
+    let random = Math.floor(Math.random() * length )
     
-    console.log(randomChoice)
-    let y = Math.floor((randomChoice / 3));
-    let x = randomChoice - (y * 3);
+    let choice = emptySpaces[random];
+    let y = Math.floor((choice / 3));
+    let x = choice - (y * 3);
 
     
-    $("div#game div:nth-child("+ (randomChoice + 1) + ")").text("X");
+    $("div#game div:nth-child("+ (choice + 1) + ")").text("X");
     go(x,y);
+  }
 }
 
-function resetGame(){
-  game.currentPlayer = "X"
-  game.winner = ""
-  game.computer = "";
-  board.boardState = [["","",""],["","",""],["","",""]];
+function goComputerHard(){
+  
 }
+
+
 
 $(document).ready(function(){
  
@@ -137,12 +139,12 @@ $(document).ready(function(){
   })
    
   $("#restart").click(function(){
-    resetGame();
+    game.resetGame();
     removeUI();
   })
 
   $("#easy").click(function(){
-    resetGame();
+    game.resetGame();
     removeUI();
     game.computer = "easy";
     goComputerEasy();

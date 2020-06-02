@@ -30,6 +30,12 @@ _Page creates a tic tac toe game_
 | flatten the board.boardState                                                                                   | [[],[],[]]                            | []                                                            |
 | map the empty spaces with indexes                                                                              | []                                    | [1,3,4]                                                       |
 | randomly choose indexed space                                                                                  | [1,3,4]                               | 3                                                             |
+| hard game                                                                                                      |                                       |                                                               |
+| computer chooses top left corner                                                                               | board.addOccupiedSpace(0,0)           | board.gameState is updated                                    |
+| computer plays bottom right if available otherwise bottom left                                                 | board.addOccupiedSpace(2,2)           | update board state                                            |
+| create an algorithm to determine if there are two of an item in a row                                          | areTwo(game.boardState)               | true or false                                                 |
+| if computer must block player do so - otherwise choose an available corner top right first then bottom left    | board.addOccupiedSpace(0,2)           | update board state                                            |
+| block player or create row otherwise randomly select a move                                                    | board.addOccupiedSpace                | update board state                                            |
 ## Setup/Installation Requirements
 
 Clone the repo and open the .html file

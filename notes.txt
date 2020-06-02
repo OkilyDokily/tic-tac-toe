@@ -28,11 +28,18 @@ determine if there is a win
   change game object state to game.won(currentuser)
 
 Easy game.
-computer plays after game player switches.
-flattens the board.boardState and then map the empty spaces with index values
-filter to only the mapped index spaces
-randomly choose an indexed space;
+  computer plays after game player switches.
+  flattens the board.boardState and then map the empty spaces with index values
+  filter to only the mapped index spaces
+  randomly choose an indexed space;
 
+Hard game.
+computer plays top left corner
+computer plays bottom right corner if not occupied else play bottom left corner
+if player plays bottom right corner then play bottom left corner. otherwise 
+  either place a space to block the player from getting a tic tac toe or play the bottom right corner.
+  if there is an available space to complete a tic tac toe go for that.
+computer plays top right corner unless it needs to block player.
 
 
 
