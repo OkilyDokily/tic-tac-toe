@@ -121,6 +121,7 @@ function goComputerHard(){
     return;
   }
   if (turn === 2){
+    turn++;
     let move = new Move(2,2);
     if(board.isAlreadyOccupied(move)){
       let move = new Move(0,2)
@@ -131,6 +132,7 @@ function goComputerHard(){
     }
   }
   if (turn === 3){
+    turn++;
     let choice = isTwo();
     let topRight = new Move(2,0)
     let bottomLeft = new Move(0,2);
@@ -146,7 +148,13 @@ function goComputerHard(){
     }
   }
   else {
-    
+    let choice = isTwo();
+    if (!(choice === false)){
+      board.addOccupiedSpace(choice.move)
+    }
+    else{
+      goComputerEasy();
+    }
   }
 }
 
