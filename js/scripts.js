@@ -86,6 +86,9 @@ let game = new Game();
 //call this at the start of each turn.
 function go(x,y){
   let move = new Move(x,y)
+  if(!(game.computer === "") && game.currentPlayer === "X"){
+    $("div#game div:nth-child("+ (((y*3) + x) + 1) + ")").text("X");
+  }
   board.addOccupiedSpace(move)
 }
 
@@ -108,8 +111,6 @@ function goComputerEasy(){
     let y = Math.floor((choice / 3));
     let x = choice - (y * 3);
 
-    
-    $("div#game div:nth-child("+ (choice + 1) + ")").text("X");
     go(x,y);
   }
 }
@@ -118,7 +119,6 @@ let turn = 1;
 function goComputerHard(){
   if(game.winner === ""){
     if (turn === 1){
-      $("div#game div:nth-child("+ 1 + ")").text("X");
       go(0,0);
       turn++;
       return;
@@ -127,12 +127,10 @@ function goComputerHard(){
       turn++;
       let move = new Move(2,2);
       if(board.isAlreadyOccupied(move)){
-        $("div#game div:nth-child("+ 3 + ")").text("X");
         go(0,2);
       }
       else{
         go(2,2);
-        $("div#game div:nth-child("+ 9 + ")").text("X");
       }
       return;
     }
@@ -142,27 +140,21 @@ function goComputerHard(){
       let topRight = new Move(2,0)
       let bottomLeft = new Move(0,2);
       if(!(choice === false)){
-        let number = (choice.emptySpace.y * 3) + (choice.emptySpace.x + 1)
-        board.addOccupiedSpace(choice.emptySpace)
-        $("div#game div:nth-child("+ number + ")").text("X");
+        go(choice.emptySpace.x,choice.emptySpace.y)
       }
       else
       if (!(board.isAlreadyOccupied(topRight))){
-        board.addOccupiedSpace(topRight);
-        $("div#game div:nth-child("+ 3 + ")").text("X");
+        go(topRight.x,topRight.y)
       }
       else{
-        board.addOccupiedSpace(bottomLeft);
-        $("div#game div:nth-child("+ 7 + ")").text("X");
+        go(bottomLeft.x,bottomLeft.y)
       }
-      return;
+     
     }
     else {
       let choice = isTwo();
       if (!(choice === false)){
-        let number = (choice.emptySpace.y * 3) + (choice.emptySpace.x + 1)
-        board.addOccupiedSpace(choice.emptySpace);
-        $("div#game div:nth-child("+ number + ")").text("X");
+        go(choice.emptySpace.x,choice.emptySpace.y);
       }
       else{
         goComputerEasy();
