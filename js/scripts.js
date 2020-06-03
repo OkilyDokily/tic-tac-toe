@@ -82,11 +82,14 @@ class Board {
 
 let board = new Board();
 let game = new Game();
-
-//call this at the start of each turn.
+//==============================================================
+//===============================================================
+//call these at the start of each turn.
+//all these functions call the go function
 function go(x,y){
   let move = new Move(x,y)
   if(!(game.computer === "") && game.currentPlayer === "X"){
+    //front end logic
     $("div#game div:nth-child("+ (((y*3) + x) + 1) + ")").text("X");
   }
   board.addOccupiedSpace(move)
@@ -162,7 +165,9 @@ function goComputerHard(){
     }
   }
 }
-
+//
+//AI algorithm//////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 function isTwo() {
   for (let i = 0; i <= 2; i++) {
     if (board.boardState[i].filter(item => item === "X").length === 2 && board.boardState.some(item => item === "")){
@@ -171,21 +176,23 @@ function isTwo() {
       return {player:"X", emptySpace:move}
     }
 
-    if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].filter(item => item === "X").length === 2 && [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].some(item => item === "")){
-      let index = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].findIndex(item => item === "");
+    let line = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]];
+    if (line.filter(item => item === "X").length === 2 && line.some(item => item === "")){
+      let index = line.findIndex(item => item === "");
       let move = new Move(i, index);
       return {player:"X", emptySpace:move}
     }  
   }
 
-  if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].filter(item => item === "X").length === 2 && [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].some(item => item === "")){
-    let index = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].findIndex(item => item === "");
+  let line = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]]
+  if (line.filter(item => item === "X").length === 2 && line.some(item => item === "")){
+    let index = line.findIndex(item => item === "");
     let move = new Move(index, index);
     return {player:"X",emptySpace: move}
   }
-
-  if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].filter(item => item ==="X").length === 2 && [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].some(item => item === "")){
-    let index = [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].findIndex(item => item === "");
+  line = [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]]
+  if (line.filter(item => item ==="X").length === 2 && line.some(item => item === "")){
+    let index = line.findIndex(item => item === "");
     let move = new Move(2 - index ,index)
     return {player:"X",emptySpace:move}
   }
@@ -197,25 +204,23 @@ function isTwo() {
       return {player:"O",emptySpace:move}
       break;
     }
-
-   
-    if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].filter(item => item === "O").length === 2 && [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].some(item => item === "")){
-      let index = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].findIndex(item => item === "");
+    let line = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]]
+    if (line.filter(item => item === "O").length === 2 && line.some(item => item === "")){
+      let index = line.findIndex(item => item === "");
       let move = new Move(i, index)
       return {player:"O", emptySpace:move}
     }
   }
-
-
-  if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].filter(item => item === "O").length === 2 && [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].some(item => item === "")){
-    let index = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].findIndex(item => item === "");
+  line = [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]]
+  if (line.filter(item => item === "O").length === 2 && line.some(item => item === "")){
+    let index = line.findIndex(item => item === "");
     let move = new Move(index, index);
     return {player:"O",emptySpace: move}
   }
 
- 
-  if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].filter(item => item ==="O").length === 2 && [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].some(item => item === "")){
-    let index = [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].findIndex(item => item === "");
+  line = [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]]
+  if (line.filter(item => item ==="O").length === 2 && line.some(item => item === "")){
+    let index = line.findIndex(item => item === "");
     let move = new Move(2 - index ,index)
     return {player:"O",emptySpace:move}
   }
@@ -223,6 +228,11 @@ function isTwo() {
   return false;
 }
 
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
+// front end logic  section
+// front end logic
 $(document).ready(function(){
  
   $("div#game").on("click","div",function(e){
@@ -272,59 +282,31 @@ $(document).ready(function(){
   function displayCross(){
     $("#cross").css("transform", "rotateY(0deg) rotate(0deg)")
     switch (game.winLine){
-      
       case 0:
-        $("#cross").css("height","10px")
-        $("#cross").css("width","300px")
-        $("#cross").css("left",6)
-        $("#cross").css("bottom",265)
+        $("#cross").css({"height":"10px","width":"300px","left":6,"bottom":265});
         break;
       case 1:
-        $("#cross").css("height","10px")
-        $("#cross").css("width","300px")
-        $("#cross").css("left",6)
-        $("#cross").css("bottom",160)
+        $("#cross").css({"height":"10px","width":"300px","left":6,"bottom":160});
         break;
       case 2:
-        $("#cross").css("height","10px")
-        $("#cross").css("width","300px")
-        $("#cross").css("left",6)
-        $("#cross").css("bottom",60)
+        $("#cross").css({"height":"10px","width":"300px","left":6,"bottom":60});
         break;
       case 3:
-        $("#cross").css("width","10px")
-        $("#cross").css("height","300px")
-        $("#cross").css("left",45)
-        $("#cross").css("bottom",312)
+        $("#cross").css({"width":"10px","height":"300px","left":45,"bottom":312});
         break;
       case 4:
-        $("#cross").css("width","10px")
-        $("#cross").css("height","300px")
-        $("#cross").css("left",150)
-        $("#cross").css("bottom",312)
+        $("#cross").css({"width":"10px","height":"300px","left":150,"bottom":312})
         break;
       case 5:
-        $("#cross").css("width","10px")
-        $("#cross").css("height","300px")
-        $("#cross").css("left",250)
-        $("#cross").css("bottom",312)
+        $("#cross").css({"width":"10px","height":"300px","left":250,"bottom":312})
         break;
       case 6:
         //diagonal from top left to bottom right
-        $("#cross").css("width","10px")
-        $("#cross").css("height","300px")
-        $("#cross").css("left",150)
-        $("#cross").css("bottom",312)
-        $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
-        console.log("case 6")
+        $("#cross").css({"width":"10px","height":"300px","left":150,"bottom":312,"transform": "rotateY(0deg) rotate(-45deg)"})
         break;
       case 7:
         //diagonal from top right to bottom left.
-        $("#cross").css("height","10px")
-        $("#cross").css("width","300px")
-        $("#cross").css("left",6)
-        $("#cross").css("bottom",160)
-        $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")  
+        $("#cross").css({"height":"10px","width":"300px","left":6,"bottom":160,"transform":"rotateY(0deg) rotate(-45deg)"})
     }
     $("#cross").show();
     
