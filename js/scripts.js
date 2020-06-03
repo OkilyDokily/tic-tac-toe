@@ -6,6 +6,7 @@ class Game {
     this.winLine = -1;
     this.computer = "";
   }
+  //automatically switch player after each turn called by board.addOccupiedSpace();
   switchPlayer() {
     if (this.currentPlayer === "X") {
       this.currentPlayer = "O";
@@ -70,6 +71,7 @@ class Board {
     }
     return true;
   }
+  //calls isalready occupied to prevent movement
   addOccupiedSpace(move) {
     if (!board.isAlreadyOccupied(move)) {
       this.boardState[move.y][move.x] = game.currentPlayer;
@@ -89,7 +91,6 @@ let game = new Game();
 function go(x,y){
   let move = new Move(x,y)
   if(!(game.computer === "") && game.currentPlayer === "X"){
-    //front end logic
     $("div#game div:nth-child("+ (((y*3) + x) + 1) + ")").text("X");
   }
   board.addOccupiedSpace(move)
@@ -97,6 +98,7 @@ function go(x,y){
 
 function goComputerEasy(){
   if (game.winner == ""){
+    //create an array of available random spaces
     let emptySpaces = board.boardState.flat().map(function(item,i){
       if(item === ""){
         return i;
@@ -105,12 +107,11 @@ function goComputerEasy(){
     }).filter(function(item){
       return !(item === "X" || item === "O")
     });
-
+    //pick a random space from the array
     let length = emptySpaces.length;
- 
     let random = Math.floor(Math.random() * length )
-    
     let choice = emptySpaces[random];
+
     let y = Math.floor((choice / 3));
     let x = choice - (y * 3);
 
@@ -120,6 +121,9 @@ function goComputerEasy(){
 
 let turn = 1;
 function goComputerHard(){
+  //the code emphasises going to various corners on the first moves
+  //if two moves on the same line are the same then block or complete the line with call to isTwo()
+  //if all else fails make a random move with a call to goComputerEasy();
   if(game.winner === ""){
     if (turn === 1){
       go(0,0);
