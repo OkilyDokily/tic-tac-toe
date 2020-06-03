@@ -15,6 +15,9 @@ class Game {
       if (this.computer === "easy") {
         goComputerEasy();
       }
+      else if (this.computer === "hard"){
+        goComputerHard();
+      }
     }
   }
   determineWinner() {
@@ -22,21 +25,23 @@ class Game {
       if (board.boardState[i].every((val, i, arr) => val === this.currentPlayer)) {
         this.winner = this.currentPlayer;
         this.winLine = i;
-        break;
+        return;
       }
       if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].every((val, i, arr) => val === this.currentPlayer)) {
         this.winner = this.currentPlayer;
         this.winLine = i + 3;
-        break;
+        return;
       }
     }
     if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].every((val, i, arr) => val === this.currentPlayer)) {
       this.winner = this.currentPlayer;
       this.winLine = 6;
+      return;
     }
     if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].every((val, i, arr) => val === this.currentPlayer)) {
       this.winner = this.currentPlayer;
       this.winLine = 7;
+      return;
     }
   }
 
@@ -45,16 +50,15 @@ class Game {
     game.winner = ""
     game.computer = "";
     board.boardState = [["","",""],["","",""],["","",""]];
+    turn = 1;
   }
 }
-
 
 
 function Move(x,y){
   this.x = x;
   this.y = y;
 }
-
 
 class Board {
   constructor() {
@@ -81,7 +85,6 @@ let game = new Game();
 
 //call this at the start of each turn.
 function go(x,y){
-  
   let move = new Move(x,y)
   board.addOccupiedSpace(move)
 }
@@ -113,47 +116,57 @@ function goComputerEasy(){
 
 let turn = 1;
 function goComputerHard(){
-  if (turn === 1){
-    let move = new Move(0,0);
-    board.addOccupiedSpace(move);
-    $("div#game div:nth-child("+ 1 + ")").text("X");
-    turn++;
-    return;
-  }
-  if (turn === 2){
-    turn++;
-    let move = new Move(2,2);
-    if(board.isAlreadyOccupied(move)){
-      let move = new Move(0,2)
-      board.addOccupiedSpace(move)
+  if(game.winner === ""){
+    if (turn === 1){
+      $("div#game div:nth-child("+ 1 + ")").text("X");
+      go(0,0);
+      turn++;
+      return;
     }
-    else{
-      board.addOccupiedSpace(move);
+    if (turn === 2){
+      turn++;
+      let move = new Move(2,2);
+      if(board.isAlreadyOccupied(move)){
+        $("div#game div:nth-child("+ 3 + ")").text("X");
+        go(0,2);
+      }
+      else{
+        go(2,2);
+        $("div#game div:nth-child("+ 9 + ")").text("X");
+      }
+      return;
     }
-  }
-  if (turn === 3){
-    turn++;
-    let choice = isTwo();
-    let topRight = new Move(2,0)
-    let bottomLeft = new Move(0,2);
-    if(!(choice === false)){
-      board.addOccupiedSpace(choice.move)
+    if (turn === 3){
+      turn++;
+      let choice = isTwo();
+      let topRight = new Move(2,0)
+      let bottomLeft = new Move(0,2);
+      if(!(choice === false)){
+        let number = (choice.emptySpace.y * 3) + (choice.emptySpace.x + 1)
+        board.addOccupiedSpace(choice.emptySpace)
+        $("div#game div:nth-child("+ number + ")").text("X");
+      }
+      else
+      if (!(board.isAlreadyOccupied(topRight))){
+        board.addOccupiedSpace(topRight);
+        $("div#game div:nth-child("+ 3 + ")").text("X");
+      }
+      else{
+        board.addOccupiedSpace(bottomLeft);
+        $("div#game div:nth-child("+ 7 + ")").text("X");
+      }
+      return;
     }
-    else
-    if (!(board.isAlreadyOccupied(topRight))){
-      board.addOccupiedSpace(topRight);
-    }
-    else{
-      board.addOccupiedSpace(bottomLeft);
-    }
-  }
-  else {
-    let choice = isTwo();
-    if (!(choice === false)){
-      board.addOccupiedSpace(choice.move)
-    }
-    else{
-      goComputerEasy();
+    else {
+      let choice = isTwo();
+      if (!(choice === false)){
+        let number = (choice.emptySpace.y * 3) + (choice.emptySpace.x + 1)
+        board.addOccupiedSpace(choice.emptySpace);
+        $("div#game div:nth-child("+ number + ")").text("X");
+      }
+      else{
+        goComputerEasy();
+      }
     }
   }
 }
@@ -164,16 +177,13 @@ function isTwo() {
       let index = board.boardState[i].findIndex(item => item === "");
       let move = new Move(index,i);
       return {player:"X", emptySpace:move}
-      break;
     }
 
-   
     if ([board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].filter(item => item === "X").length === 2 && [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].some(item => item === "")){
       let index = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]].findIndex(item => item === "");
       let move = new Move(i, index);
       return {player:"X", emptySpace:move}
-    }
-    
+    }  
   }
 
   if ([board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].filter(item => item === "X").length === 2 && [board.boardState[0][0], board.boardState[1][1], board.boardState[2][2]].some(item => item === "")){
@@ -212,7 +222,6 @@ function isTwo() {
   }
 
  
-
   if ([board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].filter(item => item ==="O").length === 2 && [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].some(item => item === "")){
     let index = [board.boardState[0][2], board.boardState[1][1], board.boardState[2][0]].findIndex(item => item === "");
     let move = new Move(2 - index ,index)
@@ -221,8 +230,6 @@ function isTwo() {
 
   return false;
 }
-
-
 
 $(document).ready(function(){
  
@@ -257,6 +264,13 @@ $(document).ready(function(){
     goComputerEasy();
   })
 
+  $("#hard").click(function(){
+    game.resetGame();
+    removeUI();
+    game.computer = "hard";
+    goComputerHard();
+  })
+
   function removeUI(){
     $("#game div").text("");
     $("#winner").text("");
@@ -264,7 +278,9 @@ $(document).ready(function(){
 
   }
   function displayCross(){
+    $("#cross").css("transform", "rotateY(0deg) rotate(0deg)")
     switch (game.winLine){
+      
       case 0:
         $("#cross").css("height","10px")
         $("#cross").css("width","300px")
@@ -308,6 +324,7 @@ $(document).ready(function(){
         $("#cross").css("left",150)
         $("#cross").css("bottom",312)
         $("#cross").css("transform", "rotateY(0deg) rotate(-45deg)")
+        console.log("case 6")
         break;
       case 7:
         //diagonal from top right to bottom left.
