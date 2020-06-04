@@ -144,6 +144,7 @@ function goComputerHard(){
     if (turn === 3){
       turn++;
       let choice = isTwo();
+     
       let topRight = new Move(2,0)
       let bottomLeft = new Move(0,2);
       if(!(choice === false)){
@@ -202,11 +203,11 @@ function isTwo() {
   }
 
   for (let i = 0; i <= 2; i++) {
-    if (board.boardState[i].filter(item => item === "O").length === 2 && board.boardState.some(item => item === "")){
+    if (board.boardState[i].filter(item => item === "O").length === 2 && board.boardState[i].some(item => item === "")){
+      console.log("hello")
       let index = board.boardState[i].findIndex(item => item === "");
       let move = new Move(index,i)
       return {player:"O",emptySpace:move}
-      break;
     }
     let line = [board.boardState[0][i], board.boardState[1][i], board.boardState[2][i]]
     if (line.filter(item => item === "O").length === 2 && line.some(item => item === "")){
